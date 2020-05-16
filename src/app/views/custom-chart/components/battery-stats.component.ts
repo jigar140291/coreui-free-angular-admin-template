@@ -3,8 +3,8 @@ import { BatteryStatsService } from '../services/battery-stats.service';
 
 @Component({
 	selector: 'app-battery-stats',
-	templateUrl: './battery-stats.component.html',
-	styleUrls: ['./battery-stats.component.css']
+  templateUrl: './battery-stats.component.html',
+  styleUrls: ['./battery-stats.component.scss']
 })
 export class BatteryStatsComponent implements OnInit {
 
@@ -12,6 +12,7 @@ export class BatteryStatsComponent implements OnInit {
 
   voltageData: object[];
   batteryList: string[];
+  selectedCell: string;
 
 	ngOnInit(): void {
 		this.batteryStatsService
@@ -22,5 +23,10 @@ export class BatteryStatsComponent implements OnInit {
 			}, (err:any) => {
 				console.log("Handle Error");
 			});
-	}
+  }
+
+  onCellSelected(cell: string){
+    console.log(cell);
+    this.selectedCell = cell;
+  }
 }
