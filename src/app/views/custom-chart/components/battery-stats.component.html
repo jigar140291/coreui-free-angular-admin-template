@@ -9,4 +9,13 @@
     </ul>
 </div>
 
-<line-chart *ngIf="voltageData" [data]="voltageData" [meta]="chartConfig"></line-chart>
+<div class="card">
+  <div class="card-header">
+    Voltage Stats: {{selectedCell}}
+  </div>
+  <div class="card-body">
+    <div class="chart-wrapper"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+    <line-chart id="d3-chart" *ngIf="voltageData" [data]="voltageData" [meta]="chartConfig"></line-chart>
+    </div>
+  </div>
+</div>

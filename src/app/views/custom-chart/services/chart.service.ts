@@ -1,5 +1,6 @@
 import { Injectable, ElementRef } from '@angular/core';
 import * as d3 from 'd3';
+import { axisRight } from 'd3';
 
 interface axis{
   expression: string;
@@ -24,7 +25,12 @@ export class ChartService {
   constructor() { }
 
   plotChart(element: ElementRef, chartData: any[], meta:lineChartMeta) {
-    let { width, height } = meta;
+    let margin = {top: 10, right: 30, bottom: 30, left: 50};
+    let { width, height, lineColor="#000" } = meta;
+
+    width = width - margin.left - margin.right;
+    height = height - margin.top - margin.bottom;
+
     let xExpression = meta.axis.x.expression;
     let yExpression = meta.axis.y.expression;
 
@@ -33,8 +39,8 @@ export class ChartService {
 
     let svg = d3.select(element.nativeElement)
               .append('svg')
-              .attr('height', '100%')
-              .attr('width', '100%');
+              .attr('height', height+50)
+              .attr('width', width+50);
     
     let xScale = d3.scaleTime()
                    .domain([new Date(dateRange[0]), new Date(dateRange[1])])
@@ -50,12 +56,14 @@ export class ChartService {
     let line = d3.line()
                   .x((data) => xScale(new Date(data[xExpression])))
                   .y((data) => yScale(data[yExpression]));
-
+                
     let chartGroup = svg.append('g')
-                        .attr('transform', 'translate(50,50)');
+                        .attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
         chartGroup
           .append('path')
+          .attr('stroke', lineColor)
+          .attr('class','line')
           .attr('d', line(chartData));
 
         chartGroup
@@ -67,8 +75,32 @@ export class ChartService {
         chartGroup
           .append('g')
           .attr('class', 'y axis')
-          .call(yAxis);    
-  }
+          .call(yAxis);
+      
+        chartGroup.append('rect')
+          .attr('x', -1 * width-1)
+          .attr('y', -1 * height)
+          .attr('height', height)
+          .attr('width', width)
+          .attr('class', 'curtain')
+          .attr('transform', 'rotate(180)')
+          .style('fill', '#ffffff');
+
+    let transition = svg.transition()
+                      .delay(200)
+                      .duration(4000)
+                      .ease(d3.easeLinear)
+                      .each(() => {
+                          d3.select('line.guide')
+                            .transition()
+                            .style('opacity', 0)
+                            .remove()
+                      });
+
+      transition.select('rect.curtain').attr('width', 0)
+      transition.select('line.guide').attr('transform', 'translate(' + width + ', 0)');    
+      
+}
 
   destroyChart(element: ElementRef): Promise<any>{
     return new Promise((resolve, reject) => {

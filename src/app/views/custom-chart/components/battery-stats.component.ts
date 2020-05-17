@@ -15,27 +15,14 @@ export class BatteryStatsComponent implements OnInit {
   batteryList: string[];
   selectedCell: string = "c1";
 
-  chartConfig: lineChartMeta = {
-    height: 300,
-    width: 500,
-    lineColor: "#20a8d8",
-    axis: {
-      x:{
-        expression: "date",
-        label: "Time Period"
-      },
-      y:{
-        expression: "c1",
-        label: "Voltage"
-      }
-    }
-  };
+  chartConfig: lineChartMeta;
 
 	ngOnInit(): void {
 		this.batteryStatsService
 			.getData("batteryData.json")
 			.subscribe((res:any) => {
         this.voltageData = res;
+        this.chartConfig = this.batteryStatsService.getUpdatedChartMeta(this.selectedCell);
         this.batteryList = this.batteryStatsService.extractBatteryList(res[0]);
 			}, (err:any) => {
 				console.log("Handle Error");
@@ -44,20 +31,6 @@ export class BatteryStatsComponent implements OnInit {
 
   onCellSelected(cell: string): void{
     this.selectedCell = cell;
-    this.chartConfig = {
-      height: 300,
-      width: 500,
-      lineColor: "#20a8d8",
-      axis: {
-        x:{
-          expression: "date",
-          label: "Time Period"
-        },
-        y:{
-          expression: this.selectedCell,
-          label: "Voltage"
-        }
-      }
-    }
+    this.chartConfig = this.batteryStatsService.getUpdatedChartMeta(this.selectedCell);
   }
 }

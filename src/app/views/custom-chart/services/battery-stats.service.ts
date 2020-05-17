@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Http} from '@angular/http';
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
+import { lineChartMeta } from './chart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,22 @@ import { map } from "rxjs/operators";
 
 export class BatteryStatsService {
 	readonly apiUrl: string = "http://localhost:4200/data/";
+
+	private chartConfig: lineChartMeta = {
+		height: 400,
+		width: 600,
+		lineColor:"#17a2b8",
+		axis: {
+		  x:{
+			expression: "date",
+			label: "Time Period"
+		  },
+		  y:{
+			expression: "",
+			label: "Voltage"
+		  }
+		}
+	};
 
 	constructor(private http: Http) {}
 
@@ -20,4 +37,9 @@ export class BatteryStatsService {
   }
   
   extractBatteryList = (listObj:object): string[] => Object.keys(listObj).filter((key) => key != "date");
+
+  getUpdatedChartMeta = (selectedCell: string) : lineChartMeta => {
+	  this.chartConfig.axis.y.expression = selectedCell;
+	  return Object.assign([], this.chartConfig);
+  }
 }
