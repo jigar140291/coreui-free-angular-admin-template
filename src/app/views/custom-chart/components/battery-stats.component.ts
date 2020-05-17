@@ -1,8 +1,9 @@
 import { Component,OnInit } from '@angular/core';
 import { BatteryStatsService } from '../services/battery-stats.service';
+import { lineChartMeta } from '../services/chart.service';
 
 @Component({
-	selector: 'app-battery-stats',
+	selector: 'battery-stats',
   templateUrl: './battery-stats.component.html',
   styleUrls: ['./battery-stats.component.scss']
 })
@@ -12,7 +13,23 @@ export class BatteryStatsComponent implements OnInit {
 
   voltageData: object[];
   batteryList: string[];
-  selectedCell: string;
+  selectedCell: string = "c1";
+
+  chartConfig: lineChartMeta = {
+    height: 300,
+    width: 500,
+    lineColor: "#20a8d8",
+    axis: {
+      x:{
+        expression: "date",
+        label: "Time Period"
+      },
+      y:{
+        expression: "c1",
+        label: "Voltage"
+      }
+    }
+  };
 
 	ngOnInit(): void {
 		this.batteryStatsService
@@ -25,8 +42,22 @@ export class BatteryStatsComponent implements OnInit {
 			});
   }
 
-  onCellSelected(cell: string){
-    console.log(cell);
+  onCellSelected(cell: string): void{
     this.selectedCell = cell;
+    this.chartConfig = {
+      height: 300,
+      width: 500,
+      lineColor: "#20a8d8",
+      axis: {
+        x:{
+          expression: "date",
+          label: "Time Period"
+        },
+        y:{
+          expression: this.selectedCell,
+          label: "Voltage"
+        }
+      }
+    }
   }
 }

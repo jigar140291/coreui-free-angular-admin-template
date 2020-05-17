@@ -6,3 +6,18 @@
 
 // If you want to add something do it here
 @import "custom";
+
+/* 13. Basic Styling with CSS */
+
+/* Style the lines by removing the fill and applying a stroke */
+
+line{
+    stroke: brown;
+    stroke-width: 3;
+}
+
+path{
+    stroke: blue;
+    stroke-width: 2px;
+    fill: none;
+}

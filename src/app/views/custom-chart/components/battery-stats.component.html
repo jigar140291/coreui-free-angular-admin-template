@@ -1,12 +1,12 @@
-<div class="card-body">
-    <div class="btn-group" dropdown>
-      <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
-        {{selectedCell && selectedCell.length ? "Selected Cell : "+selectedCell : "Select Battery Cell"}} <span class="caret"></span>
-      </button>
-      <ul *dropdownMenu class="dropdown-menu" role="menu" style="height:200px;">
-        <li *ngFor="let cell of batteryList" role="menuitem">
-            <a class="dropdown-item" (click)="onCellSelected(cell)">{{cell}}</a>
-        </li>
-      </ul>
-    </div>
-  </div>
+<div class="btn-group" dropdown>
+    <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+      {{selectedCell && selectedCell.length ? "Selected Cell : "+selectedCell : "Select Battery Cell"}} <span class="caret"></span>
+    </button>
+    <ul *dropdownMenu class="dropdown-menu" role="menu" style="height:200px;">
+      <li *ngFor="let cell of batteryList" role="menuitem">
+          <a class="dropdown-item" (click)="onCellSelected(cell)">{{cell}}</a>
+      </li>
+    </ul>
+</div>
+
+<line-chart *ngIf="voltageData" [data]="voltageData" [meta]="chartConfig"></line-chart>
