@@ -25,7 +25,7 @@ export class ChartService {
 
   constructor() { }
 
-  plotChart(element: ElementRef, chartData: any[], meta: lineChartMeta) {
+  plotChart(element: ElementRef, chartData: any[], meta: lineChartMeta): void {
     
     let margin = {top: 10, right: 30, bottom: 30, left: 50 };
     let { width, height, lineColor = "#000", animation = false } = meta;
