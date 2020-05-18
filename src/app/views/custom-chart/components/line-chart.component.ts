@@ -30,7 +30,7 @@ export class LineChartComponent implements OnChanges {
   constructor(private chartService: ChartService, private element: ElementRef) { }
 
   ngOnChanges(): void{
-    this.chartService.destroyChart(this.element)
+    this.chartService.OnDestroyChart(this.element)
       .then(() => this.chartService.plotChart(this.element, this.data, this.meta))
   }
 }

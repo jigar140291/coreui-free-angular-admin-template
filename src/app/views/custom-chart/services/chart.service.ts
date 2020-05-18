@@ -157,7 +157,7 @@ export class ChartService {
       }
   }
 
-  destroyChart(element: ElementRef): Promise<any>{
+  OnDestroyChart (element: ElementRef): Promise<any>{
     return new Promise((resolve, reject) => {
       /**
        * Added Promise, In case if Destroy has Async tasks.
