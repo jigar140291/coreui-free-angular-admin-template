@@ -22,7 +22,7 @@ export class BatteryStatsService {
 		  },
 		  y:{
 			expression: "",
-			label: "Voltage"
+			label: "Battery Voltage (V)"
 		  }
 		}
 	};

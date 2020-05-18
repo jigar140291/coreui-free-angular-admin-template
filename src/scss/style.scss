@@ -11,13 +11,10 @@
 
 /* Style the lines by removing the fill and applying a stroke */
 
-@keyframes move {
-    to {
-        stroke-dashoffset: 0;
-      }
-  }
-
 #d3-chart{
+    svg{
+        overflow: overlay;
+    }
     line{
         stroke-width: 2px;
     }
@@ -30,11 +27,27 @@
             stroke-width: 1px;
         }
     }
-}
+    .y.axis{
+        text{
+            fill: #000;
+            font-size: 11px;
+        }
+    }
+    .overlay {
+        fill: none;
+        pointer-events: all;
+    }
 
-.line {
-   // stroke-dasharray: 450;
-    //stroke-dashoffset: 450;
-    //animation: move 2s linear;
-  }
-  
+    .focus circle {
+        fill: steelblue;
+    }
+
+    .focus text {
+        font-size: 14px;
+    }
+
+    .tool-tip {
+        fill: white;
+        stroke: #000;
+    }
+}
