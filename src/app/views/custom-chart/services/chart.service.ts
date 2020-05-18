@@ -37,7 +37,9 @@ export class ChartService {
     let xExpression = x.expression;
     let yExpression = y.expression;
     let yLabel = y.label;
-  
+    
+    let dateFormatter = (date: string) => new Date(date);
+
     let valueRange = d3.extent(chartData, (data) => data[yExpression]);
     let dateRange = d3.extent(chartData, (data) => data[xExpression]);
   
@@ -47,7 +49,7 @@ export class ChartService {
       .attr('width', width + 50);
   
     let xScale = d3.scaleTime()
-      .domain([new Date(dateRange[0]), new Date(dateRange[1])])
+      .domain([dateFormatter(dateRange[0]), dateFormatter(dateRange[1])])
       .range([0, width]);
   
     let yScale = d3.scaleLinear()
@@ -58,7 +60,7 @@ export class ChartService {
     let yAxis = d3.axisLeft(yScale);
   
     let line = d3.line()
-      .x((data) => xScale(new Date(data[xExpression])))
+      .x((data) => xScale(dateFormatter(data[xExpression])))
       .y((data) => yScale(data[yExpression]));
   
     let chartGroup = svg.append('g')
@@ -142,7 +144,7 @@ export class ChartService {
       .on("mouseout",  () => focus.style("display", "none"))
       .on("mousemove", showTooltip);
   
-    let bisectDate = d3.bisector((data: any) => new Date(data[xExpression])).left;
+    let bisectDate = d3.bisector((data: any) => dateFormatter(data[xExpression])).left;
   
     function showTooltip(): void {
       let invertedDate = xScale.invert(d3.mouse(this)[0]),
@@ -151,7 +153,7 @@ export class ChartService {
           d1 = chartData[index],
           ttData = Date.parse(invertedDate.toString()) - Date.parse(d0[xExpression]) > Date.parse(d1[xExpression]) - Date.parse(invertedDate.toString()) ? d0 : d1;
   
-      focus.attr("transform", "translate(" + xScale(new Date(ttData[xExpression])) + "," + yScale(ttData[yExpression]) + ")");
+      focus.attr("transform", "translate(" + xScale(dateFormatter(ttData[xExpression])) + "," + yScale(ttData[yExpression]) + ")");
       focus.select(".tooltip-date").text(`Date: ${ttData[xExpression]}`);
       focus.select(".tooltip-voltage").text(`Voltage: ${ttData[yExpression]}`);
     }
