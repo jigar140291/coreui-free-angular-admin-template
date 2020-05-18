@@ -16,7 +16,6 @@ export class LineChartComponent implements OnChanges {
 
   @Input() 
   set meta(value:lineChartMeta){
-    console.log("meta updated");
     this._meta = value;
   }
   get meta() { return this._meta}

@@ -17,11 +17,13 @@
     }
     line{
         stroke-width: 2px;
+        stroke: #d1d1d1;
     }
     path{
         fill: none;
         &.domain{
             stroke-width: 1.5px;
+            stroke: #d1d1d1;
         }
         &.line{
             stroke-width: 1px;
@@ -39,15 +41,20 @@
     }
 
     .focus circle {
-        fill: steelblue;
+        fill: #fff;
+        stroke-width: 2;
+        stroke: steelblue;
     }
 
     .focus text {
         font-size: 14px;
+        fill: #fff;
+        opacity: 0.8;
     }
 
     .tool-tip {
-        fill: white;
-        stroke: #000;
+        color: white;
+        fill: #000;
+        opacity: 0.8;
     }
 }
