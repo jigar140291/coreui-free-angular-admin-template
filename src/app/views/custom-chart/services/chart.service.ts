@@ -11,6 +11,7 @@ export interface lineChartMeta {
   height: number;
   width: number;
   lineColor?: string;
+  animation?: string;
   axis: {
     x: axis;
     y: axis;
@@ -26,7 +27,7 @@ export class ChartService {
 
   plotChart(element: ElementRef, chartData: any[], meta:lineChartMeta) {
     let margin = {top: 10, right: 30, bottom: 30, left: 50};
-    let { width, height, lineColor="#000" } = meta;
+    let { width, height, lineColor="#000", animation=true } = meta;
 
     width = width - margin.left - margin.right;
     height = height - margin.top - margin.bottom;
@@ -76,7 +77,8 @@ export class ChartService {
           .append('g')
           .attr('class', 'y axis')
           .call(yAxis);
-      
+    
+    if(animation){
         chartGroup.append('rect')
           .attr('x', -1 * width-1)
           .attr('y', -1 * height)
@@ -86,19 +88,16 @@ export class ChartService {
           .attr('transform', 'rotate(180)')
           .style('fill', '#ffffff');
 
-    let transition = svg.transition()
-                      .delay(200)
-                      .duration(4000)
-                      .ease(d3.easeLinear)
-                      .each(() => {
-                          d3.select('line.guide')
-                            .transition()
-                            .style('opacity', 0)
-                            .remove()
-                      });
+        let transition = svg.transition()
+                          .delay(200)
+                          .duration(3000)
+                          .ease(d3.easeLinear)
+                          .each(() => d3.select('line.guide').transition().style('opacity', 0).remove());
 
-      transition.select('rect.curtain').attr('width', 0)
-      transition.select('line.guide').attr('transform', 'translate(' + width + ', 0)');    
+        transition.select('rect.curtain').attr('width', 0);
+        transition.select('line.guide').attr('transform', 'translate(' + width + ', 0)');  
+    }
+          
       
 }
 
