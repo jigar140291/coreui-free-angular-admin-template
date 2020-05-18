@@ -15,6 +15,7 @@ export class BatteryStatsService {
 		height: 400,
 		width: 600,
 		lineColor:"#17a2b8",
+		animation: true,
 		axis: {
 		  x:{
 			expression: "date",
@@ -42,4 +43,6 @@ export class BatteryStatsService {
 	  this.chartConfig.axis.y.expression = selectedCell;
 	  return Object.assign([], this.chartConfig);
   }
+
+  updateAnimation = (val: boolean) => this.chartConfig.animation = val;
 }

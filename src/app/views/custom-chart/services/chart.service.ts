@@ -11,7 +11,7 @@ export interface lineChartMeta {
   height: number;
   width: number;
   lineColor?: string;
-  animation?: string;
+  animation?: boolean;
   axis: {
     x: axis;
     y: axis;

@@ -33,4 +33,8 @@ export class BatteryStatsComponent implements OnInit {
     this.selectedCell = cell;
     this.chartConfig = this.batteryStatsService.getUpdatedChartMeta(this.selectedCell);
   }
+
+  updateMeta(animation: boolean): void{
+    this.batteryStatsService.updateAnimation(animation); 
+  }
 }
