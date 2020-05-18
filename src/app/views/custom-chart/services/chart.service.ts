@@ -155,15 +155,24 @@ export class ChartService {
             focus.select(".tooltip-date").text(`Date: ${ttData[xExpression]}`);
             focus.select(".tooltip-voltage").text(`Voltage: ${ttData[yExpression]}`);
       }
-}
+  }
 
   destroyChart(element: ElementRef): Promise<any>{
     return new Promise((resolve, reject) => {
       /**
        * Added Promise, In case if Destroy has Async tasks.
        */
-      d3.select(element.nativeElement).selectAll('svg').remove();
+      d3.select(element.nativeElement)
+        .select('rect.overlay')
+        .on("mouseover", null)
+        .on("mouseout", null)
+        .on("mousemove", null);
+
+      d3.select(element.nativeElement)
+        .selectAll('svg')
+        .remove();
+
       resolve({});
-    })
+    });
   }
 }
